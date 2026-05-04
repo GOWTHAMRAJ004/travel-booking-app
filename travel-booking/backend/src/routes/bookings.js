@@ -2,7 +2,6 @@ const router = require('express').Router();
 const { authenticate, adminOnly } = require('../middleware/auth');
 const Booking = require('../models/Booking');
 const User = require('../models/User');
-const { sendBookingRequestToAdmin, sendApprovalToUser, sendRejectionToUser } = require('../utils/email');
 
 // Create booking
 router.post('/', authenticate, async (req, res) => {
@@ -15,9 +14,6 @@ router.post('/', authenticate, async (req, res) => {
       packageName, packageCost, packageDuration,
       packageHighlights: Array.isArray(packageHighlights) ? packageHighlights.join(', ') : packageHighlights,
     });
-
-    // Send email to admin (non-blocking)
-    sendBookingRequestToAdmin(booking, req.user).catch(console.error);
 
     res.status(201).json({ booking });
   } catch (err) {
@@ -65,12 +61,6 @@ router.patch('/admin/:id', authenticate, adminOnly, async (req, res) => {
 
     booking.status = status;
     await booking.save();
-
-    if (status === 'approved') {
-      sendApprovalToUser(booking, booking.user).catch(console.error);
-    } else {
-      sendRejectionToUser(booking, booking.user).catch(console.error);
-    }
 
     res.json({ booking });
   } catch (err) {
