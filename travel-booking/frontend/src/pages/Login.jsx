@@ -14,13 +14,18 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    e.stopPropagation();
+    console.log('Form submitted', form);
     setLoading(true);
     try {
+      console.log('Making API call...');
       const { data } = await api.post('/auth/login', form);
+      console.log('Login successful', data);
       login(data.token, data.user);
       toast.success(`Welcome back, ${data.user.name}!`);
       navigate(data.user.role === 'admin' ? '/admin' : '/search');
     } catch (err) {
+      console.error('Login error:', err);
       toast.error(err.response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
@@ -38,14 +43,26 @@ export default function Login() {
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label>Email Address</label>
-              <input type="email" placeholder="you@example.com" required
-                value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+              <input 
+                type="email" 
+                placeholder="you@example.com" 
+                required
+                autoComplete="email"
+                value={form.email} 
+                onChange={(e) => setForm({ ...form, email: e.target.value })} 
+              />
             </div>
             <div className="form-group">
               <label>Password</label>
               <div className="input-icon-wrap">
-                <input type={showPass ? 'text' : 'password'} placeholder="••••••••" required
-                  value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
+                <input 
+                  type={showPass ? 'text' : 'password'} 
+                  placeholder="••••••••" 
+                  required
+                  autoComplete="current-password"
+                  value={form.password} 
+                  onChange={(e) => setForm({ ...form, password: e.target.value })} 
+                />
                 <button type="button" className="input-icon-btn" onClick={() => setShowPass(!showPass)}>
                   {showPass ? <EyeOff size={17} /> : <Eye size={17} />}
                 </button>
