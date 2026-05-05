@@ -64,15 +64,17 @@ This will take a few minutes to download all packages.
 Check if `.env` file exists in the backend folder. It should contain:
 ```
 PORT=5000
-JWT_SECRET=2a849e472af68105d46e99a9dc2484775d12f8a27255a142e5ed7e316670b0e3
+JWT_SECRET=your_jwt_secret_here
 JWT_EXPIRES_IN=7d
 EMAIL_HOST=smtp-relay.brevo.com
 EMAIL_PORT=587
-EMAIL_USER=moriesmax62@gmail.com
-EMAIL_PASS=xsmtpsib-e29d620ce4229407097a60a216949421e13ec4d3f38336b7e120320bbe46f4ad-Z3v6HkkUU2QnaKle
-ADMIN_EMAIL=moriesmax62@gmail.com
+EMAIL_USER=your_email@gmail.com
+EMAIL_PASS=your_email_password_here
+ADMIN_EMAIL=your_email@gmail.com
 FRONTEND_URL=http://localhost:5173
 ```
+
+**Note**: Copy the actual values from the existing `.env` file - don't type them manually!
 
 Start the backend server:
 ```bash
@@ -122,7 +124,7 @@ You should see the Travel Booking App!
 
 ## Default Admin Login
 
-- Email: `moriesmax62@gmail.com`
+- Email: (check the ADMIN_EMAIL in backend/.env)
 - Password: `admin123`
 
 ## Common Issues
