@@ -31,14 +31,14 @@ const start = async () => {
     const User = require('./models/User');
     const admin = await User.findOne({ where: { email: process.env.ADMIN_EMAIL } });
     if (!admin) {
-      const hashed = await bcrypt.hash('admin123', 12);
+      const hashed = await bcrypt.hash('SecureAdmin@2024', 12);
       await User.create({
         name: 'Admin',
         email: process.env.ADMIN_EMAIL,
         password: hashed,
         role: 'admin',
       });
-      console.log('Admin user created: admin@travelbooking.com / admin123');
+      console.log('Admin user created: admin@travelbooking.com / SecureAdmin@2024');
     }
 
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

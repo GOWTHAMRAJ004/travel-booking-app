@@ -56,7 +56,7 @@ export default function Login() {
             </button>
           </form>
           <div className="auth-hint">
-            Admin demo: <code>admin@travelbooking.com</code> / <code>admin123</code>
+            Admin demo: <code>admin@travelbooking.com</code> / <code>SecureAdmin@2024</code>
           </div>
         </div>
       </div>
