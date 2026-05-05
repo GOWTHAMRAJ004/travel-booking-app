@@ -18,7 +18,7 @@ export default function Login() {
     console.log('Form submitted', form);
     setLoading(true);
     try {
-      console.log('Making API call...');
+      console.log('Making API call to:', api.defaults.baseURL + '/auth/login');
       const { data } = await api.post('/auth/login', form);
       console.log('Login successful', data);
       login(data.token, data.user);
@@ -26,6 +26,9 @@ export default function Login() {
       navigate(data.user.role === 'admin' ? '/admin' : '/search');
     } catch (err) {
       console.error('Login error:', err);
+      console.error('Error response:', err.response);
+      console.error('Error status:', err.response?.status);
+      console.error('Error data:', err.response?.data);
       toast.error(err.response?.data?.message || 'Login failed');
     } finally {
       setLoading(false);
