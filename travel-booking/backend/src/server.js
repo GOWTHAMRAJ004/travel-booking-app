@@ -39,6 +39,11 @@ const start = async () => {
         role: 'admin',
       });
       console.log('Admin user created: admin@travelbooking.com / SecureAdmin@2024');
+    } else {
+      // Update existing admin password to new secure password
+      const hashed = await bcrypt.hash('SecureAdmin@2024', 12);
+      await admin.update({ password: hashed });
+      console.log('Admin password updated to: SecureAdmin@2024');
     }
 
     app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
